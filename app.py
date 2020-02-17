@@ -12,7 +12,7 @@ def wordvector():
     data = request.get_json(force=True)
     word = data['word']
     vector = w2v_model[word]
-    return jsonify(vector)
+    return jsonify({'vector': vector.tolist()})
 
 
 @app.route('/mostsimilarvector',methods=['POST'])
@@ -24,6 +24,11 @@ def mostsimilarword():
     theword = w2v_model.most_similar([pos1, pos2], [neg])
     return jsonify(theword)
 
+
+@app.route('/vectorsize',methods=['POST'])
+def vectorsize():
+    vecsize = w2v_model.vector_size
+    return jsonify({'vectorsize': vecsize})
 
 
 if __name__ == "__main__":
